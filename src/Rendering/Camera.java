@@ -6,7 +6,7 @@ import Geometry.Vector3D;
 public class Camera {
     private Ray mainRay;
 
-    public Ray getRay(int x,int y) {
+    public Ray getRay(int x, int y) {
         return rays[x][y];
     }
 
@@ -32,20 +32,24 @@ public class Camera {
         initRays();
     }
 
+    private int gcd(int a, int b) {
+        if (a > b)
+            return gcd(b, a);
+        if (b % a == 0)
+            return a;
+        return gcd(b % a, a);
+    }
+
     private void initRays() {
         rays = new Ray[WIDTH][HEIGHT];
         double screenWidth = 2 * FOCAL_LENGTH * Math.tan(VIEW_ANGLE_HORIZONTAL / 2);
         double screenHeight = 2 * FOCAL_LENGTH * Math.tan(VIEW_ANGLE_VERTICAL / 2);
+        double gcdWH = gcd(WIDTH, HEIGHT);
         for (int i = 0; i < WIDTH; ++i)
             for (int j = 0; j < HEIGHT; ++j) {
-                rays[i][j] = new Ray(mainRay.getPosition(), new Vector3D((double)FOCAL_LENGTH, mainRay.getPosition().getY() + (i - WIDTH / 2) * screenWidth / WIDTH, mainRay.getPosition().getZ() - (j - HEIGHT / 2) * screenHeight / HEIGHT));
-                if((i<10 && j<10) || (WIDTH-i<10 && HEIGHT-j<10)) {
-                    System.out.print((i - WIDTH / 2) * screenWidth / WIDTH);
-                    System.out.print("|||||");
-                    System.out.println(-(j - HEIGHT / 2) * screenHeight / HEIGHT);
-                }
+                rays[i][j] = new Ray(mainRay.getPosition(), new Vector3D((double) FOCAL_LENGTH, (VIEW_ANGLE_VERTICAL) * (WIDTH / gcdWH) * (mainRay.getPosition().getY() + (i - WIDTH / 2) * screenWidth / WIDTH), (VIEW_ANGLE_HORIZONTAL) * (HEIGHT / gcdWH) * (mainRay.getPosition().getZ() - (j - HEIGHT / 2) * screenHeight / HEIGHT)));
             }
-        System.out.println(screenWidth+"==="+screenHeight);
+        System.out.println(screenWidth + "===" + screenHeight);
     }
 
     public Ray getMainRay() {

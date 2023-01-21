@@ -1,5 +1,6 @@
 package Geometry;
 
+import java.awt.*;
 import java.util.Objects;
 
 public class Vector3D extends GeometryObject {
@@ -16,11 +17,18 @@ public class Vector3D extends GeometryObject {
         this.y = 0d;
         this.z = 0d;
     }
-
+    public Vector3D(Color color){
+        this((double) color.getRed(), (double) color.getGreen(), (double) color.getBlue());
+    }
+    public Color toColor(){
+        return new Color((int) Math.max(0,Math.min(getX(),255)), (int) Math.max(0,Math.min(getY(),255)), (int) Math.max(0,Math.min(getZ(),255)));
+    }
     public Vector3D(Vector3D vector3D) {
         this(vector3D.getX(), vector3D.getY(), vector3D.getZ());
     }
-
+    public Vector3D negative(){
+        return GeometryMath.negative(this);
+    }
     public Double getX() {
         return x;
     }
