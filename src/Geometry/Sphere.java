@@ -71,4 +71,8 @@ public class Sphere extends GeometryObject {
     }
 
 
+    @Override
+    public Vector3D getNormal(Vector3D point) {
+        return vectorSub(point,getPosition()).normalized();
+    }
 }

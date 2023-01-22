@@ -27,9 +27,6 @@ public class Camera {
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
         DIAGONAL_KOF= Math.sqrt(((double)(WIDTH*WIDTH+HEIGHT*HEIGHT+FOCAL_LENGTH*FOCAL_LENGTH))/(STANDART_WIDTH*STANDART_WIDTH+STANDART_HEIGHT*STANDART_HEIGHT+STANDART_FOCAL_LENGTH*STANDART_FOCAL_LENGTH));
-        System.out.println(WIDTH);
-        System.out.println(HEIGHT);
-        System.out.println(DIAGONAL_KOF);
         this.FOCAL_LENGTH = FOCAL_LENGTH;
         this.VIEW_ANGLE_HORIZONTAL = VIEW_ANGLE_HORIZONTAL;
         this.VIEW_ANGLE_VERTICAL = VIEW_ANGLE_VERTICAL;
@@ -54,7 +51,6 @@ public class Camera {
             for (int j = 0; j < HEIGHT; ++j) {
                 rays[i][j] = new Ray(mainRay.getPosition(), new Vector3D((double) FOCAL_LENGTH*DIAGONAL_KOF, DIAGONAL_KOF*(VIEW_ANGLE_VERTICAL) * (WIDTH / gcdWH) * (mainRay.getPosition().getY() + (i - WIDTH / 2) * screenWidth / WIDTH), DIAGONAL_KOF *(VIEW_ANGLE_HORIZONTAL) * (HEIGHT / gcdWH) * (mainRay.getPosition().getZ() - (j - HEIGHT / 2) * screenHeight / HEIGHT)));
             }
-        System.out.println(screenWidth + "===" + screenHeight);
     }
 
     public Ray getMainRay() {

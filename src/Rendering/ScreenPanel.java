@@ -1,5 +1,6 @@
 package Rendering;
 
+import Geometry.Plane;
 import Geometry.Sphere;
 import Geometry.Vector3D;
 import Graphics.*;
@@ -20,6 +21,9 @@ public class ScreenPanel extends JPanel {
     public ScreenPanel() {
         super();
         scene = new Scene(new ArrayList<>(),new ArrayList<>(),WIDTH,HEIGHT,35,30d,30d);
+        scene.addGraphicalObject(new GraphicsObject(new Plane(new Vector3D(0d,0d,-10d),new Vector3D(0d,0d,1d)),new Material(Color.blue.darker(),1d,0d,0d,0d,0d,0d,0d)));
+        scene.addGraphicalObject(new GraphicsObject(new Plane(new Vector3D(100d,0d,0d),new Vector3D(-1d,0d,0d)),new Material(Color.red.darker(),1d,0d,0d,0d,0d,0d,0d)));
+        scene.addGraphicalObject(new GraphicsObject(new Plane(new Vector3D(0d,200d,0d),new Vector3D(0d,1d,0d)),new Material(Color.GREEN.darker(),1d,0d,0d,0d,0d,0d,0d)));
         scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-116.667, -26.666, 40d), 50d), new Material(Color.darkGray, 1d, 0.4d, 0d, 0d, 500d,1d,0d)));
         scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-216.667, -66.666, 70d), 50d), new Material(Color.RED, 1d, 0.4d, 0d, 0d, 500d,1d,0d)));
         scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-206.667, 33.333, 10d), 15d), new Material(Color.ORANGE, 1.4d, 0.9d, 0d, 0d, 300d,1d,0d)));

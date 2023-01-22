@@ -1,9 +1,6 @@
 package Rendering;
 
-import Geometry.GeometryMath;
-import Geometry.Ray;
-import Geometry.Sphere;
-import Geometry.Vector3D;
+import Geometry.*;
 import Structures.Pair;
 import Graphics.*;
 
@@ -75,8 +72,7 @@ public class Scene {
             return BACKGROUND_COLOR;
         Vector3D point = vectorSum(ray.getPosition(), multiply(ray.getDirection(), answer.getSecond().getSecond()));
         Vector3D normal = null;
-        if (answer.getFist().getGeometryObject() instanceof Sphere)
-            normal = vectorSub(point, ((Sphere) answer.getFist().getGeometryObject()).getPosition()).normalized();
+        normal=answer.getFist().getGeometryObject().getNormal(point);
         double defuseLightIntensity = 0d;
         double specularLightIntensity = 0d;
         Material material = answer.getFist().getMaterial();
@@ -88,8 +84,8 @@ public class Scene {
             Vector3D shadowPt = sceneIntersect(new Ray(shadowOrig, lightDirection));
             if (shadowPt != null && length(vectorSub(shadowPt, shadowOrig)) < lightDistance)
                 continue;
-            assert normal != null;
             //
+            assert normal != null;
             defuseLightIntensity += lightObject.getIntensity() * Math.max(0d, scalarMultiply(lightDirection, normal));
             specularLightIntensity += Math.pow(material.getSpecularExp(), Math.max(0.d, scalarMultiply(reflect(lightDirection, normal, material.getReflectionExp()), ray.getDirection()))) * lightObject.getIntensity();
 
@@ -112,6 +108,7 @@ public class Scene {
 
         //sum colors
         color = vectorSum(vectorSum(vectorSum(defuseColor, specularColor), reflectColor), refractColor).toColor();
+        //color=defuseColor.toColor();
         return color;
     }
 
