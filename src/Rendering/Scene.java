@@ -11,11 +11,10 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static Geometry.GeometryMath.*;
-import static javax.swing.text.html.HTML.Attribute.N;
 
 public class Scene {
     private final ArrayList<GraphicsObject> objects;
-    private final ArrayList<Light> lights;
+    private final ArrayList<LightObject> lightObjects;
     private Camera camera;
 
     public Camera getCamera() {
@@ -26,9 +25,9 @@ public class Scene {
         this.camera = camera;
     }
 
-    public Scene(ArrayList<GraphicsObject> objects, ArrayList<Light> lights) {
+    public Scene(ArrayList<GraphicsObject> objects, ArrayList<LightObject> lightObjects) {
         this.objects = objects;
-        this.lights = lights;
+        this.lightObjects = lightObjects;
         this.camera = new Camera(800, 600, 35, 30d / 180d * Math.PI, 30d / 180d * Math.PI, new Ray(new Vector3D(-400d, 0d, 0d), new Vector3D(1d, 0d, 0d)));
     }
 
@@ -40,8 +39,8 @@ public class Scene {
         objects.add(graphicsObject);
     }
 
-    public void addLight(Light light) {
-        lights.add(light);
+    public void addLight(LightObject lightObject) {
+        lightObjects.add(lightObject);
     }
 
     public Color castRay(final Ray ray) {
@@ -61,11 +60,11 @@ public class Scene {
         double defuseLightIntensity = 0d;
         double specularLightIntensity = 0d;
         Material material = answer.getFist().getMaterial();
-        for (Light light : lights) {
-            Vector3D lightDirection = vectorSub(light.getPosition(), point).normalized();
+        for (LightObject lightObject : lightObjects) {
+            Vector3D lightDirection = vectorSub(lightObject.getPosition(), point).normalized();
             assert normal != null;
-            defuseLightIntensity += light.getIntensity() * Math.max(0d, scalarMultiply(lightDirection, normal));
-            specularLightIntensity += Math.pow(material.getSpecularExp(), Math.max(0.d, scalarMultiply(reflect(lightDirection, normal), ray.getDirection()))) * light.getIntensity();
+            defuseLightIntensity += lightObject.getIntensity() * Math.max(0d, scalarMultiply(lightDirection, normal));
+            specularLightIntensity += Math.pow(material.getSpecularExp(), Math.max(0.d, scalarMultiply(reflect(lightDirection, normal), ray.getDirection()))) * lightObject.getIntensity();
         }
         Color color = answer.getFist().getMaterial().getColor();
         Vector3D defuseColor = multiply(new Vector3D(color), defuseLightIntensity * answer.getFist().getMaterial().getAlbedo().getX());

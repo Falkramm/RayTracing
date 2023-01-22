@@ -2,11 +2,11 @@ package Graphics;
 
 import Geometry.Vector3D;
 
-public class Light {
+public class LightObject {
     private Vector3D position;
     private Double intensity;
 
-    public Light(Vector3D position, Double intensity) {
+    public LightObject(Vector3D position, Double intensity) {
         this.position = position;
         this.intensity = intensity;
     }
