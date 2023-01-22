@@ -5,7 +5,15 @@ import java.awt.*;
 public class Material {
     private Color color;
     private Double defuseAlbedo, specularAlbedo, reflectionAlbedo, refractionAlbedo;
-    private Double specularExp,reflectionExp;
+    private Double specularExp,reflectionExp,refractionExp;
+
+    public Double getRefractionExp() {
+        return refractionExp;
+    }
+
+    public void setRefractionExp(Double refractionExp) {
+        this.refractionExp = refractionExp;
+    }
 
     public Double getReflectionExp() {
         return reflectionExp;
@@ -55,14 +63,15 @@ public class Material {
         this.specularExp = specularExp;
     }
 
-    public Material(Color color, Double defuseAlbedo, Double specularAlbedo, Double reflectionAlbedo, Double refractionAlbedo, Double specularExp,Double reflectionExp) {
+    public Material(Color color, Double defuseAlbedo, Double specularAlbedo, Double reflectionAlbedo, Double refractionAlbedo, Double specularExp, Double reflectionExp, Double refractionExp) {
         this.color = color;
         this.defuseAlbedo = defuseAlbedo;
         this.specularAlbedo = specularAlbedo;
         this.reflectionAlbedo = reflectionAlbedo;
         this.refractionAlbedo = refractionAlbedo;
         this.specularExp = specularExp;
-        this.reflectionExp=reflectionExp;
+        this.reflectionExp = reflectionExp;
+        this.refractionExp = refractionExp;
     }
 
     public Color getColor() {

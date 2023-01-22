@@ -1,9 +1,12 @@
 package Geometry;
 
+import Graphics.GraphicsObject;
+import Graphics.Material;
 import Structures.CompareDouble;
 import Structures.Pair;
 
 import java.security.KeyPair;
+import java.util.ArrayList;
 
 public class GeometryMath {
     public static Double length(Vector3D u) {
@@ -41,7 +44,23 @@ public class GeometryMath {
     }
 
     public static Vector3D reflect(final Vector3D u, final Vector3D normal, final Double refractionExp) { // Snell's law
-        return multiply(vectorSub(u,multiply(multiply(normal,2d),scalarMultiply(u,normal))),refractionExp);
+        return multiply(vectorSub(u, multiply(multiply(normal, 2d), scalarMultiply(u, normal))), refractionExp);
     }
 
+    public static Vector3D refract(final Vector3D u, Vector3D normal, final Double refractionEpx) { // Snell's law
+        Double cosi = -Math.max(-1.d, Math.min(1.d, scalarMultiply(u, normal)));
+        Double etai = 1d, etat = refractionEpx;
+        Vector3D n = normal;
+        if (cosi < 0) {
+            cosi = -cosi;
+            Double swap = etai;
+            etai = etat;
+            etat = swap;
+            n = normal.negative();
+        }
+        Double eta = etai / etat;
+        Double k = 1 - eta * eta * (1 - cosi * cosi);
+
+        return k < 0 ? new Vector3D(0d, 0d, 0d) : vectorSum(multiply(u, eta), multiply(n, (eta * cosi - Math.sqrt(k))));
+    }
 }

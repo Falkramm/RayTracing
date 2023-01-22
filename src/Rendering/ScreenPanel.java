@@ -15,15 +15,16 @@ public class ScreenPanel extends JPanel {
     private Integer currentIndex;
     private final Timer timerFPS;
     private final Integer FPS = 12;
-    private final Integer WIDTH = 1080, HEIGHT = 760;
+    private final Integer WIDTH = 800, HEIGHT = 600;
 
     public ScreenPanel() {
         super();
-        scene = new Scene();
-        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-116.667, -26.666, 40d), 50d), new Material(Color.darkGray, 1d, 0.4d, 0d, 0d, 500d,1d)));
-        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-206.667, 33.333, 10d), 15d), new Material(Color.ORANGE, 1.4d, 0.9d, 0d, 0d, 300d,1d)));
-        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-246.667, -53.333, 10d), 15d), new Material(Color.YELLOW, 0.3d, 0d, 1d, 0d, 200d,1d)));
-        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-106.667, 106.666, 80d), 50d), new Material(Color.darkGray, 1d, 1d, 1d, 0d, 300d,1d)));
+        scene = new Scene(new ArrayList<>(),new ArrayList<>(),WIDTH,HEIGHT,35,30d,30d);
+        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-116.667, -26.666, 40d), 50d), new Material(Color.darkGray, 1d, 0.4d, 0d, 0d, 500d,1d,0d)));
+        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-216.667, -66.666, 70d), 50d), new Material(Color.RED, 1d, 0.4d, 0d, 0d, 500d,1d,0d)));
+        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-206.667, 33.333, 10d), 15d), new Material(Color.ORANGE, 1.4d, 0.9d, 0d, 0d, 300d,1d,0d)));
+        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-246.667, 3.333, 10d), 15d), new Material(Color.YELLOW, 0.3d, 0d, 0.3d, 0.5d, 200d,0.2d,0.7d)));
+        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-106.667, 106.666, 80d), 50d), new Material(Color.darkGray, 1d, 1d, 1d, 0d, 300d,1d,0d)));
         scene.addLight(new LightObject(new Vector3D(-1000.774353, -300.995270, 1004.748230), 1d));
         scene.addLight(new LightObject(new Vector3D(-500.774353, 1000.995270, 504.748230), 1d));
         setSize(new Dimension(scene.getCamera().getWIDTH(), scene.getCamera().getHEIGHT()));

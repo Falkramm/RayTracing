@@ -21,13 +21,18 @@ public class Camera {
     private Ray[][] rays;
     private final Integer WIDTH, HEIGHT, FOCAL_LENGTH;
     private final Double VIEW_ANGLE_HORIZONTAL, VIEW_ANGLE_VERTICAL;
-
-    public Camera(Integer WIDTH, Integer HEIGHT, Integer FOCAL_LENGTH, Double VIEW_ANGLE_HORIZONTAL, Double VIEW_ANGLE_HEIGHT, Ray ray) {
+    private final Integer STANDART_WIDTH=800,STANDART_HEIGHT=600,STANDART_FOCAL_LENGTH=35;
+    private final Double DIAGONAL_KOF;
+    public Camera(Integer WIDTH, Integer HEIGHT, Integer FOCAL_LENGTH, Double VIEW_ANGLE_HORIZONTAL, Double VIEW_ANGLE_VERTICAL, Ray ray) {
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
+        DIAGONAL_KOF= Math.sqrt(((double)(WIDTH*WIDTH+HEIGHT*HEIGHT+FOCAL_LENGTH*FOCAL_LENGTH))/(STANDART_WIDTH*STANDART_WIDTH+STANDART_HEIGHT*STANDART_HEIGHT+STANDART_FOCAL_LENGTH*STANDART_FOCAL_LENGTH));
+        System.out.println(WIDTH);
+        System.out.println(HEIGHT);
+        System.out.println(DIAGONAL_KOF);
         this.FOCAL_LENGTH = FOCAL_LENGTH;
         this.VIEW_ANGLE_HORIZONTAL = VIEW_ANGLE_HORIZONTAL;
-        this.VIEW_ANGLE_VERTICAL = VIEW_ANGLE_HEIGHT;
+        this.VIEW_ANGLE_VERTICAL = VIEW_ANGLE_VERTICAL;
         this.mainRay = ray;
         initRays();
     }
@@ -47,7 +52,7 @@ public class Camera {
         double gcdWH = gcd(WIDTH, HEIGHT);
         for (int i = 0; i < WIDTH; ++i)
             for (int j = 0; j < HEIGHT; ++j) {
-                rays[i][j] = new Ray(mainRay.getPosition(), new Vector3D((double) FOCAL_LENGTH, (VIEW_ANGLE_VERTICAL) * (WIDTH / gcdWH) * (mainRay.getPosition().getY() + (i - WIDTH / 2) * screenWidth / WIDTH), (VIEW_ANGLE_HORIZONTAL) * (HEIGHT / gcdWH) * (mainRay.getPosition().getZ() - (j - HEIGHT / 2) * screenHeight / HEIGHT)));
+                rays[i][j] = new Ray(mainRay.getPosition(), new Vector3D((double) FOCAL_LENGTH*DIAGONAL_KOF, DIAGONAL_KOF*(VIEW_ANGLE_VERTICAL) * (WIDTH / gcdWH) * (mainRay.getPosition().getY() + (i - WIDTH / 2) * screenWidth / WIDTH), DIAGONAL_KOF *(VIEW_ANGLE_HORIZONTAL) * (HEIGHT / gcdWH) * (mainRay.getPosition().getZ() - (j - HEIGHT / 2) * screenHeight / HEIGHT)));
             }
         System.out.println(screenWidth + "===" + screenHeight);
     }
