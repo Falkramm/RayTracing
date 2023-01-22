@@ -2,7 +2,7 @@ package Geometry;
 
 import java.util.Objects;
 
-public class Ray extends GeometryObject {
+public class Ray{
     Vector3D position, direction;
 
     public Ray(Vector3D position, Vector3D direction) {

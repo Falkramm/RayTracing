@@ -3,6 +3,7 @@ package Rendering;
 import Geometry.Sphere;
 import Geometry.Vector3D;
 import Graphics.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,13 +19,14 @@ public class ScreenPanel extends JPanel {
 
     public ScreenPanel() {
         super();
-        scene=new Scene();
-        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-116.667,-26.666,40d),50d),new Material(Color.darkGray,new Vector3D(1d,0.4d,0d),500d)));
-        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-206.667,33.333,10d),15d),new Material(Color.ORANGE,new Vector3D(1.4d,0.9d,0d),300d)));
-        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-146.667,-83.333,10d),30d),new Material(Color.YELLOW,new Vector3D(1d,0d,0d),200d)));
-        scene.addLight(new LightObject(new Vector3D(-1000.774353,-300.995270,1004.748230),1d));
-        scene.addLight(new LightObject(new Vector3D(-500.774353,1000.995270,504.748230),1d));
-        setSize(new Dimension(scene.getCamera().getWIDTH(),scene.getCamera().getHEIGHT()));
+        scene = new Scene();
+        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-116.667, -26.666, 40d), 50d), new Material(Color.darkGray, 1d, 0.4d, 0d, 0d, 500d,1d)));
+        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-206.667, 33.333, 10d), 15d), new Material(Color.ORANGE, 1.4d, 0.9d, 0d, 0d, 300d,1d)));
+        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-246.667, -53.333, 10d), 15d), new Material(Color.YELLOW, 0.3d, 0d, 1d, 0d, 200d,1d)));
+        scene.addGraphicalObject(new GraphicsObject(new Sphere(new Vector3D(-106.667, 106.666, 80d), 50d), new Material(Color.darkGray, 1d, 1d, 1d, 0d, 300d,1d)));
+        scene.addLight(new LightObject(new Vector3D(-1000.774353, -300.995270, 1004.748230), 1d));
+        scene.addLight(new LightObject(new Vector3D(-500.774353, 1000.995270, 504.748230), 1d));
+        setSize(new Dimension(scene.getCamera().getWIDTH(), scene.getCamera().getHEIGHT()));
         frames = scene.getVideo();
         currentIndex = 0;
         timerFPS = new Timer(1000 / FPS, e -> nextScreen());

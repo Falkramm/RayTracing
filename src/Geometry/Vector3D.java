@@ -3,7 +3,7 @@ package Geometry;
 import java.awt.*;
 import java.util.Objects;
 
-public class Vector3D extends GeometryObject {
+public class Vector3D{
     private Double x, y, z;
 
     public Vector3D(Double x, Double y, Double z) {

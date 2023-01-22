@@ -1,6 +1,10 @@
 package Geometry;
 
+import Structures.Pair;
+
 import java.util.Objects;
+
+import static Geometry.GeometryMath.vectorSub;
 
 public class Sphere extends GeometryObject{
     Vector3D position;
@@ -46,5 +50,20 @@ public class Sphere extends GeometryObject{
                 "position=" + position +
                 ", radius=" + radius +
                 '}';
+    }
+
+    @Override
+    public Pair<Boolean, Double> rayIntersect(Ray ray) {
+        Vector3D L = vectorSub(this.getPosition(),ray.getPosition());
+        Double tca = GeometryMath.scalarMultiply(L, ray.getDirection());
+        double d2 = GeometryMath.length(L) * GeometryMath.length(L) - tca * tca;
+        if (d2 > this.getRadius() * this.getRadius()) return new Pair<>(false, 0d);
+        Double thc;
+        thc = Math.sqrt(this.getRadius() * this.getRadius() - d2);
+        double t0 = tca - thc;
+        double t1 = tca + thc;
+        if (t0 < 0) t0 = t1;
+        if (t0 < 0) return new Pair<>(false, 0d);
+        return new Pair<>(true, t0);
     }
 }

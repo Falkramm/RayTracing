@@ -1,4 +1,4 @@
 package Geometry;
 
-public class GeometryObject {
+public abstract class GeometryObject implements Intersect {
 }
