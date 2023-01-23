@@ -1,6 +1,7 @@
 package Rendering;
 
 import Geometry.*;
+import Models.Model3D;
 import Structures.Pair;
 import Graphics.*;
 
@@ -28,7 +29,7 @@ public class Scene {
     public Scene(ArrayList<GraphicsObject> objects, ArrayList<LightObject> lightObjects, Integer WIDTH, Integer HEIGHT, Integer FOCAL_LENGTH, Double VIEW_ANGLE_HORIZONTAL, Double VIEW_ANGLE_VERTICAL) {
         this.objects = objects;
         this.lightObjects = lightObjects;
-        this.camera = new Camera(WIDTH, HEIGHT, FOCAL_LENGTH, VIEW_ANGLE_HORIZONTAL / 180d * Math.PI, VIEW_ANGLE_VERTICAL / 180d * Math.PI, new Ray(new Vector3D(-400d, 0d, 0d), new Vector3D(1d, 0d, 0d)));
+        this.camera = new Camera(WIDTH, HEIGHT, FOCAL_LENGTH, VIEW_ANGLE_HORIZONTAL / 180d * Math.PI, VIEW_ANGLE_VERTICAL / 180d * Math.PI, new Ray(new Vector3D(-400d, 0d, 5d), new Vector3D(1d, 0d, 0d)));
     }
 
     public Scene() {
@@ -38,7 +39,9 @@ public class Scene {
     public void addGraphicalObject(GraphicsObject graphicsObject) {
         objects.add(graphicsObject);
     }
-
+    public void addModel3D(Model3D model3D){
+        this.objects.addAll(model3D.getObjects());
+    }
     public void addLight(LightObject lightObject) {
         lightObjects.add(lightObject);
     }

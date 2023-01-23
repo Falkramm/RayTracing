@@ -38,7 +38,6 @@ public class GeometryMath {
                 -(u.getX() * v.getZ() - u.getZ() * v.getX()),
                 u.getX() * v.getY() - u.getY() * v.getX());
     }
-
     public static Vector3D negative(Vector3D u) {
         return GeometryMath.vectorSub(new Vector3D(0d, 0d, 0d), u);
     }
@@ -46,7 +45,9 @@ public class GeometryMath {
     public static Vector3D reflect(final Vector3D u, final Vector3D normal, final Double refractionExp) { // Snell's law
         return multiply(vectorSub(u, multiply(multiply(normal, 2d), scalarMultiply(u, normal))), refractionExp);
     }
-
+    public static Polygon transport(Polygon polygon,Vector3D vector){
+        return new Polygon(vectorSum(polygon.getA(),vector),vectorSum(polygon.getB(),vector),vectorSum(polygon.getC(),vector),vectorSum(polygon.getD(),vector));
+    }
     public static Vector3D refract(final Vector3D u, Vector3D normal, final Double refractionEpx) { // Snell's law
         Double cosi = -Math.max(-1.d, Math.min(1.d, scalarMultiply(u, normal)));
         Double etai = 1d, etat = refractionEpx;
