@@ -22,13 +22,10 @@ public class ScreenPanel extends JPanel {
     public ScreenPanel() {
         super();
         scene = new Scene(new ArrayList<>(),new ArrayList<>(),WIDTH,HEIGHT,35,30d,30d);
-        //Polygons
-//        scene.addGraphicalObject(new GraphicsObject(new Polygon(new Vector3D(-300d,10d,0d),new Vector3D(-300d,50d,0d),new Vector3D(-350d,30d,-20d),new Vector3D(-350d,-10d,-20d)),new Material(Color.cyan.darker().darker(),1d,0d,0d,1d,0d,0d,1d)));
-//        scene.addGraphicalObject(new GraphicsObject(new Polygon(new Vector3D(-200d,70d,15d),new Vector3D(-200d,120d,15d),new Vector3D(-300d,50d,0d),new Vector3D(-300d,10d,0d)),new Material(Color.BLACK.darker().darker().darker().darker(),0.3d,0d,1d,0d,0d,1d,0d)));
         //Models
         scene.addModel3D(ModelFactory.getCube(new Vector3D(-160d,20d,90d),50d));
         //Planes
-        scene.addGraphicalObject(new GraphicsObject(new Plane(new Vector3D(0d,0d,-10d),new Vector3D(0d,0d,1d)),new Material(Color.blue.darker(),1d,0d,0d,0d,0d,0d,0d)));
+        scene.addGraphicalObject(new GraphicsObject(new Plane(new Vector3D(0d,0d,-10d),new Vector3D(0d,0d,1d)),new Material(Color.blue.darker(),1d,0d,0.6d,0d,0d,1d,0d)));
         scene.addGraphicalObject(new GraphicsObject(new Plane(new Vector3D(100d,0d,0d),new Vector3D(-1d,0d,0d)),new Material(Color.red.darker(),1d,0d,0d,0d,0d,0d,0d)));
         scene.addGraphicalObject(new GraphicsObject(new Plane(new Vector3D(0d,200d,0d),new Vector3D(0d,1d,0d)),new Material(Color.GREEN.darker(),1d,0d,0d,0d,0d,0d,0d)));
         //Spheres

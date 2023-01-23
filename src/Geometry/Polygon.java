@@ -21,9 +21,6 @@ public class Polygon extends GeometryObject {
         Vector3D normal1, normal2;
         normal1 = vectorMultiply(vectorSub(B, A), vectorSub(D, A));
         normal2 = vectorMultiply(vectorSub(B, C), vectorSub(D, C));
-        System.out.println(normal1);
-        System.out.println(normal2);
-        System.out.println(length(vectorMultiply(normal1, normal2)) );
         if (length(vectorMultiply(normal1, normal2)) != 0)
             throw new IllegalArgumentException("Point is not on one plane!!!");
         plane = new Plane(A, normal1);
@@ -35,7 +32,6 @@ public class Polygon extends GeometryObject {
         if (!pair.getFist())
             return new Pair<>(false, 0d);
         Vector3D point = vectorSum(ray.getPosition(), multiply(ray.getDirection(), pair.getSecond()));
-
         Double Sab, Sbc, Scd, Sda;
         Sab = length(vectorMultiply(vectorSub(A, point), vectorSub(B, point)));
         Sbc = length(vectorMultiply(vectorSub(B, point), vectorSub(C, point)));

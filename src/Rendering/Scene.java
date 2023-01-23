@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static Geometry.GeometryMath.*;
 
 public class Scene {
-    private final Integer MAX_REFLECTION_NUMBER = 4;
+    private final Integer MAX_REFLECTION_NUMBER = 10;
     private final Color BACKGROUND_COLOR = Color.GRAY;
     private final ArrayList<GraphicsObject> objects;
     private final ArrayList<LightObject> lightObjects;
@@ -64,21 +64,21 @@ public class Scene {
     }
 
     public Color castRay(final Ray ray, Integer reflectionStep) {
-        Pair<GraphicsObject, Pair<Boolean, Double>> answer = new Pair<>(new GraphicsObject(), new Pair<>(false, Double.MAX_VALUE));
+        Pair<GraphicsObject, Pair<Boolean, Double>> returnObject = new Pair<>(new GraphicsObject(), new Pair<>(false, Double.MAX_VALUE));
         for (GraphicsObject object : objects) {
             Pair<Boolean, Double> pair = object.getGeometryObject().rayIntersect(ray);
-            if (pair.getFist() && pair.getSecond() < answer.getSecond().getSecond()) {
-                answer = new Pair(object, pair);
+            if (pair.getFist() && pair.getSecond() < returnObject.getSecond().getSecond()) {
+                returnObject = new Pair(object, pair);
             }
         }
-        if (!answer.getSecond().getFist() || reflectionStep >= MAX_REFLECTION_NUMBER)
+        if (!returnObject.getSecond().getFist() || reflectionStep >= MAX_REFLECTION_NUMBER)
             return BACKGROUND_COLOR;
-        Vector3D point = vectorSum(ray.getPosition(), multiply(ray.getDirection(), answer.getSecond().getSecond()));
+        Vector3D point = vectorSum(ray.getPosition(), multiply(ray.getDirection(), returnObject.getSecond().getSecond()));
         Vector3D normal = null;
-        normal=answer.getFist().getGeometryObject().getNormal(point);
+        normal=returnObject.getFist().getGeometryObject().getNormal(point);
         double defuseLightIntensity = 0d;
         double specularLightIntensity = 0d;
-        Material material = answer.getFist().getMaterial();
+        Material material = returnObject.getFist().getMaterial();
         for (LightObject lightObject : lightObjects) {
             Vector3D lightDirection = vectorSub(lightObject.getPosition(), point).normalized();
             //check shadow
@@ -88,16 +88,15 @@ public class Scene {
             if (shadowPt != null && length(vectorSub(shadowPt, shadowOrig)) < lightDistance)
                 continue;
             //
-            assert normal != null;
             defuseLightIntensity += lightObject.getIntensity() * Math.max(0d, scalarMultiply(lightDirection, normal));
             specularLightIntensity += Math.pow(material.getSpecularExp(), Math.max(0.d, scalarMultiply(reflect(lightDirection, normal, material.getReflectionExp()), ray.getDirection()))) * lightObject.getIntensity();
 
         }
-        Color color = answer.getFist().getMaterial().getColor();
+        Color color = returnObject.getFist().getMaterial().getColor();
         //get defuse Color
-        Vector3D defuseColor = multiply(new Vector3D(color), defuseLightIntensity * answer.getFist().getMaterial().getDefuseAlbedo());
+        Vector3D defuseColor = multiply(new Vector3D(color), defuseLightIntensity * returnObject.getFist().getMaterial().getDefuseAlbedo());
         //get specular Color
-        Vector3D specularColor = multiply(new Vector3D(1d, 1d, 1d), specularLightIntensity * answer.getFist().getMaterial().getSpecularAlbedo());
+        Vector3D specularColor = multiply(new Vector3D(1d, 1d, 1d), specularLightIntensity * returnObject.getFist().getMaterial().getSpecularAlbedo());
         //get reflectColor
         Vector3D reflectDirection = reflect(ray.getDirection(), normal, material.getReflectionExp()).normalized();
         assert normal != null;
